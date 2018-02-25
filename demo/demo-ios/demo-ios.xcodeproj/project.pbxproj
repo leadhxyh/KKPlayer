@@ -345,7 +345,6 @@
 		9C886BAB1E78EC9F00F2CFD1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 69U78V53ZN;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -363,7 +362,6 @@
 		9C886BAC1E78EC9F00F2CFD1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 69U78V53ZN;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
