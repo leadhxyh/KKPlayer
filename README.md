@@ -3,4 +3,4 @@
 
 
 
-![image](https://github.com/KKFinger/KKToydayNews/blob/master/截图/1.PNG)     ![image](https://github.com/KKFinger/KKToydayNews/blob/master/截图/2.PNG)
+![image](https://github.com/KKFinger/KKPlayer/blob/master/截图/1.PNG)     ![image](https://github.com/KKFinger/KKPlayer/blob/master/截图/2.PNG)
