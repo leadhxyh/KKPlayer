@@ -6,6 +6,15 @@
 //  Copyright © 2017 finger. All rights reserved.
 //
 
+/*
+ *opengl绘制一般流程
+ *1、创建渲染程序
+ *2、编译顶点和片元着色器
+ *3、将顶点坐标(决定纹理图在渲染视图中的位置)和纹理坐标(决定渲染纹理图的区域)传入渲染管道
+ *4、根据视频帧更新纹理图
+ *5、绘制
+ */
+
 #import "KKGLProgram.h"
 
 @interface KKGLProgram()

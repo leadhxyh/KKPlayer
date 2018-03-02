@@ -37,7 +37,11 @@
 
 #pragma mark -- 准备操作
 
-- (void)prepareVideo;
+/**
+ prepareVideo
+ @param forceRenderWithOpenGL -- NO ,使用AVPlayer渲染，YES , 使用opengl渲染
+ */
+- (void)prepareVideo:(BOOL)forceRenderWithOpenGL;
 
 #pragma mark -- 播放控制
 

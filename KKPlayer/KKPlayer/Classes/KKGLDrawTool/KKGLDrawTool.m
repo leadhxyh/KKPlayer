@@ -128,6 +128,7 @@
     CGRect rect = CGRectMake(0, 0, viewport.size.width * scale, viewport.size.height * scale);
     switch (self.videoType) {
         case KKVideoTypeNormal:{
+            //更新纹理坐标和顶点坐标
             [self.normalGLBuffer bindPositionLocation:program.locationPosition textureCoordLocation:program.locationTextureCoord textureRotateType:[self textureRotateWithType:glFrame.rotateType]];
             glViewport(rect.origin.x, rect.origin.y, CGRectGetWidth(rect), CGRectGetHeight(rect));
             [program updateMatrix:GLKMatrix4Identity];
@@ -135,9 +136,11 @@
         }
             break;
         case KKVideoTypeVR:{
+            //更新纹理坐标和顶点坐标
             [self.vrGLBuffer bindPositionLocation:program.locationPosition textureCoordLocation:program.locationTextureCoord];
             switch (self.displayType) {
                 case KKDisplayTypeNormal:{
+                    //计算顶点变换矩阵
                     GLKMatrix4 matrix;
                     BOOL success = [self.vrMatrix singleMatrixWithSize:rect.size matrix:&matrix fingerRotation:self.renderView.fingerRotation];
                     if (success) {
@@ -148,6 +151,7 @@
                 }
                     break;
                 case KKDisplayTypeVRBox:{
+                    //计算顶点变换矩阵
                     GLKMatrix4 leftMatrix;
                     GLKMatrix4 rightMatrix;
                     BOOL success = [self.vrMatrix doubleMatrixWithSize:rect.size leftMatrix:&leftMatrix rightMatrix:&rightMatrix fingerRotation:self.renderView.fingerRotation];

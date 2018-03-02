@@ -27,7 +27,7 @@ typedef NS_ENUM(NSUInteger, KKGLFrameType) {
 
 //ffmpeg videoToolbox
 - (void)updateWithFFVideoFrame:(KKFFVideoFrame *)videoFrame;
-//AVPlayer
+//AVPlayer播放vr视频
 - (void)updateWithCVPixelBuffer:(CVPixelBufferRef)pixelBuffer;
 
 - (CVPixelBufferRef)pixelBufferForNV12;

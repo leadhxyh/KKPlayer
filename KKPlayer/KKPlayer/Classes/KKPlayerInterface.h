@@ -25,6 +25,27 @@ typedef NS_ENUM(NSUInteger, KKVideoType) {
     KKVideoTypeVR,
 };
 
+//渲染图层的类型
+typedef NS_ENUM(NSUInteger,KKRenderViewType) {
+    KKRenderViewTypeEmpty,
+    KKRenderViewTypeAVPlayerLayer,//AVplayer
+    KKRenderViewTypeGLKView,//ffmpeg,videoToolbox
+};
+
+//解码方式
+typedef NS_ENUM(NSUInteger, KKDecoderType) {
+    KKDecoderTypeError,
+    KKDecoderTypeAVPlayer,
+    KKDecoderTypeFFmpeg,
+    KKDecoderTypeEmpty,
+};
+
+//显示方式
+typedef NS_ENUM(NSUInteger, KKDisplayType) {
+    KKDisplayTypeNormal,//正常的视频画面
+    KKDisplayTypeVRBox,//vr盒子
+};
+
 //播放器状态
 typedef NS_ENUM(NSUInteger, KKPlayerState) {
     KKPlayerStateNone = 0,
@@ -35,12 +56,6 @@ typedef NS_ENUM(NSUInteger, KKPlayerState) {
     KKPlayerStateFinished = 5,
     KKPlayerStateFailed = 6,
     KKPlayerStateSeeking = 6,
-};
-
-// display mode
-typedef NS_ENUM(NSUInteger, KKDisplayType) {
-    KKDisplayTypeNormal,
-    KKDisplayTypeVRBox,
 };
 
 //视频填充模式
@@ -57,15 +72,7 @@ typedef NS_ENUM(NSUInteger, KKPlayerBackgroundMode) {
     KKPlayerBackgroundModeContinue,
 };
 
-// decode type
-typedef NS_ENUM(NSUInteger, KKDecoderType) {
-    KKDecoderTypeError,
-    KKDecoderTypeAVPlayer,
-    KKDecoderTypeFFmpeg,
-    KKDecoderTypeEmpty,
-};
-
-// media format
+//文件格式
 typedef NS_ENUM(NSUInteger, KKMediaFormat) {
     KKMediaFormatError,
     KKMediaFormatUnknown,
@@ -107,8 +114,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic,assign)NSTimeInterval playableBufferInterval;//最小缓冲时长
 @property(nonatomic,assign)CGFloat volume;
 
-@property(nonatomic,assign,readonly) BOOL seekEnable;
-@property(nonatomic,assign,readonly) BOOL seeking;
+@property(nonatomic,assign,readonly)BOOL seekEnable;
+@property(nonatomic,assign,readonly)BOOL seeking;
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;

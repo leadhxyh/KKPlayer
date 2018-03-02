@@ -27,16 +27,14 @@ typedef NS_ENUM(NSUInteger, KKTextureRotateType) {
 
 + (instancetype)coordBuffer;
 
-- (void)bindPositionLocation:(GLint)positionLocation
-        textureCoordLocation:(GLint)textureCoordLocation;
-
-- (void)bindPositionLocation:(GLint)positionLocation
-        textureCoordLocation:(GLint)textureCoordLocation
-           textureRotateType:(KKTextureRotateType)textureRotateType;
-
 #pragma mark -- 子类实现
 
 - (void)genBufferIdentify;
 - (void)setupCoordBuffer;
+- (void)bindPositionLocation:(GLint)positionLocation
+        textureCoordLocation:(GLint)textureCoordLocation;
+- (void)bindPositionLocation:(GLint)positionLocation
+        textureCoordLocation:(GLint)textureCoordLocation
+           textureRotateType:(KKTextureRotateType)textureRotateType;
 
 @end

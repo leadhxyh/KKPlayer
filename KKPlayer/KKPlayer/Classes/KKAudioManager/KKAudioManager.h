@@ -24,6 +24,7 @@ typedef NS_ENUM(NSUInteger, KKAudioManagerRouteChangeReason) {
 
 @class KKAudioManager;
 
+//获取音频帧数据
 @protocol KKAudioManagerDelegate <NSObject>
 - (void)audioManager:(KKAudioManager *)audioManager outputData:(float *)outputData numberOfFrames:(UInt32)numberOfFrames numberOfChannels:(UInt32)numberOfChannels;
 @end

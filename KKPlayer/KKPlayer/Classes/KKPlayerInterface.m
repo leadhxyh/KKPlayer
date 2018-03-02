@@ -96,7 +96,7 @@
     switch (self.decoderType){
         case KKDecoderTypeAVPlayer:{
             [self.ffPlayer stop];
-            [self.avPlayer prepareVideo];
+            [self.avPlayer prepareVideo:NO];
         }
             break;
         case KKDecoderTypeFFmpeg:{
@@ -196,7 +196,6 @@
             switch (self.state) {
                 case KKPlayerStatePlaying:
                 case KKPlayerStateBuffering:{
-                    // fix : maybe receive interruption notification when enter foreground.
                     NSTimeInterval timeInterval = [[NSDate date] timeIntervalSince1970];
                     if (timeInterval - self.lastForegroundTimeInterval > 1.5) {
                         [self pause];

@@ -45,11 +45,11 @@
     [self updateDisplayViewLayout:layer.bounds];
 }
 
-#pragma mark -- 渲染方式
+#pragma mark -- 渲染方式,选择对应的渲染图层
 
-- (void)setRendererType:(KKRendererType)rendererType{
-    if(_rendererType != rendererType){
-        _rendererType = rendererType ;
+- (void)setRenderViewType:(KKRenderViewType)renderViewType{
+    if(_renderViewType != renderViewType){
+        _renderViewType = renderViewType ;
         [self setupRenderView];
     }
 }
@@ -58,17 +58,17 @@
 
 - (void)setupRenderView{
     [self cleanView];
-    switch (self.rendererType) {
-        case KKRendererTypeEmpty:
+    switch (self.renderViewType) {
+        case KKRenderViewTypeEmpty:
             break;
-        case KKRendererTypeAVPlayerLayer:{
+        case KKRenderViewTypeAVPlayerLayer:{
             self.avPlayerLayer = [AVPlayerLayer playerLayerWithPlayer:nil];
             [self.layer insertSublayer:self.avPlayerLayer atIndex:0];
             [self resetAVPlayer];
             [self resetAVPlayerVideoGravity];
         }
             break;
-        case KKRendererTypeOpenGL:{
+        case KKRenderViewTypeGLKView:{
             self.glViewController = [KKGLViewController viewControllerWithRenderView:self];
             dispatch_async(dispatch_get_main_queue(), ^{
                 GLKView *glView = (GLKView *)self.glViewController.view;
@@ -101,7 +101,7 @@
 
 - (void)resetAVPlayer{
     if (self.avPlayerLayer && self.decodeType == KKDecoderTypeAVPlayer) {
-        if ([self.renderAVPlayerDelegate renderGetAVPlayer] && [UIApplication sharedApplication].applicationState != UIApplicationStateBackground) {
+        if (self.renderAVPlayerDelegate && [self.renderAVPlayerDelegate respondsToSelector:@selector(renderGetAVPlayer)] && [UIApplication sharedApplication].applicationState != UIApplicationStateBackground) {
             self.avPlayerLayer.player = [self.renderAVPlayerDelegate renderGetAVPlayer];
         } else {
             self.avPlayerLayer.player = nil;
@@ -147,12 +147,12 @@
 #pragma mark -- 截屏
 
 - (UIImage *)snapshot{
-    switch (self.rendererType) {
-        case KKRendererTypeEmpty:
+    switch (self.renderViewType) {
+        case KKRenderViewTypeEmpty:
             return nil;
-        case KKRendererTypeAVPlayerLayer:
+        case KKRenderViewTypeAVPlayerLayer:
             return [self.renderAVPlayerDelegate renderGetSnapshotAtCurrentTime];
-        case KKRendererTypeOpenGL:
+        case KKRenderViewTypeGLKView:
             return [self.glViewController snapshot];
     }
 }
@@ -202,9 +202,9 @@
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
 //    if (self.playerInterface.displayType == KKDisplayTypeVRBox) return;
-    switch (self.rendererType) {
-        case KKRendererTypeEmpty:
-        case KKRendererTypeAVPlayerLayer:
+    switch (self.renderViewType) {
+        case KKRenderViewTypeEmpty:
+        case KKRenderViewTypeAVPlayerLayer:
             return;
         default:{
             UITouch * touch = [touches anyObject];

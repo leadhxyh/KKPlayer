@@ -23,6 +23,7 @@ static int ffmpegInterruptCallback(void *ctx){
 @property(nonatomic,copy)NSDictionary *metadata;
 @property(nonatomic,assign)NSTimeInterval videoTimebase;
 @property(nonatomic,assign)NSTimeInterval videoFPS;
+@property(nonatomic,copy)NSString *videoFormat;
 @property(nonatomic,assign)CGSize videoPresentationSize;
 @property(nonatomic,assign)CGFloat videoAspect;
 @property(nonatomic,assign)NSTimeInterval audioTimebase;
@@ -392,6 +393,14 @@ static int ffmpegInterruptCallback(void *ctx){
         return KKFFVideoFrameRotateType270;
     }
     return KKFFVideoFrameRotateType0;
+}
+
+- (NSString *)videoFormat{
+    const char *formatName = self->formatContext->iformat->name;
+    if (!formatName) {
+        return @"";
+    }
+    return [NSString stringWithCString:formatName encoding:NSUTF8StringEncoding];
 }
 
 @end

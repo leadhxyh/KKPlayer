@@ -8,9 +8,9 @@
 
 @interface KKGLProgram:NSObject
 @property (nonatomic,assign)GLint programId;
-@property (nonatomic,assign)GLint locationPosition;
-@property (nonatomic,assign)GLint locationTextureCoord;
-@property (nonatomic,assign)GLint locationMatrix;
+@property (nonatomic,assign)GLint locationPosition;//顶点坐标
+@property (nonatomic,assign)GLint locationTextureCoord;//纹理坐标
+@property (nonatomic,assign)GLint locationMatrix;//顶点变换矩阵
 
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;

@@ -72,7 +72,7 @@
     self.lastPostProgressTime = 0;
     self.lastPostPlayableTime = 0;
     ((KKRenderView *)(self.playerInterface.videoRenderView)).decodeType = KKDecoderTypeEmpty;
-    ((KKRenderView *)(self.playerInterface.videoRenderView)).rendererType = KKRendererTypeEmpty;
+    ((KKRenderView *)(self.playerInterface.videoRenderView)).renderViewType = KKRenderViewTypeEmpty;
 }
 
 - (void)cleanFrame{
@@ -196,7 +196,7 @@
 
 - (void)decoderDidPrepareToDecodeFrames:(KKFFDecoder *)decoder{
     if (self.decoder.videoEnable) {
-        [((KKRenderView *)(self.playerInterface.videoRenderView)) setRendererType:KKRendererTypeOpenGL];
+        [((KKRenderView *)(self.playerInterface.videoRenderView)) setRenderViewType:KKRenderViewTypeGLKView];
     }
 }
 

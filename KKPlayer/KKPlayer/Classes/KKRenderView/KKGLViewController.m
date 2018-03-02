@@ -185,6 +185,7 @@
 }
 
 - (BOOL)needDrawOpenGL{
+    //获取音视频帧，数据来源为AVPlayer或者FFmpeg
     [self.renderView fetchVideoFrameForGLFrame:self.currentGLFrame];
     
     if (!self.currentGLFrame.hasUpate) {
@@ -196,6 +197,7 @@
         return NO;
     }
     
+    //更新纹理图
     CGFloat aspect = 16.0 / 9.0;
     if(![self.drawTool updateTextureWithGLFrame:self.currentGLFrame aspect:&aspect]){
         return NO;
