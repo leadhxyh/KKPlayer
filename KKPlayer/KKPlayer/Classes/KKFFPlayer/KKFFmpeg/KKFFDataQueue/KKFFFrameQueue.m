@@ -61,14 +61,12 @@
         return;
     }
     BOOL added = NO;
-    if (self.frames.count > 0) {
-        for (NSInteger i = self.frames.count - 1; i >= 0; i--) {
-            KKFFFrame *obj = [self.frames objectAtIndex:i];
-            if (frame.position > obj.position) {
-                [self.frames insertObject:frame atIndex:i + 1];
-                added = YES;
-                break;
-            }
+    for (NSInteger i = self.frames.count - 1; i >= 0; i--) {
+        KKFFFrame *obj = [self.frames objectAtIndex:i];
+        if (frame.position > obj.position) {
+            [self.frames insertObject:frame atIndex:i + 1];
+            added = YES;
+            break;
         }
     }
     if (!added) {
@@ -86,7 +84,7 @@
 - (__kindof KKFFFrame *)getFirstFrameWithBlocking{
     [self.condition lock];
     while (self.frames.count < self.minFrameCountThreshold/*队列中的帧个数小于阈值*/ &&
-           !(self.ignoreMinFrameCountThresholdLimit && self.frames.firstObject)/*队列为空*/) {
+           !(self.ignoreMinFrameCountThresholdLimit && self.frames.firstObject)/*队列不为空*/) {
         if (self.destoryToken) {
             [self.condition unlock];
             return nil;

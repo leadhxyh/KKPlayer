@@ -173,7 +173,7 @@ static NSTimeInterval maxPacketSleepFullAndPauseTimeInterval = 0.5;
     self.ffmpegOperationQueue.qualityOfService = NSQualityOfServiceUserInteractive;
     
     [self setupFormatContextOperation];
-    [self setupReadPacketOperation];
+    [self setupReadPacketOperation];//启动读取音视频帧线程
 }
 
 #pragma mark -- 初始化formatContext
@@ -225,6 +225,16 @@ static NSTimeInterval maxPacketSleepFullAndPauseTimeInterval = 0.5;
     [self startVideoDecoderOperation];
 }
 
+- (void)setupFFAudioDecoder{
+    if (self.formatContext.audioEnable) {
+        self.audioDecoder = [KKFFAudioDecoder decoderWithCodecContext:self.formatContext->audioCodecContext
+                                                             timebase:self.formatContext.audioTimebase
+                                                             sampleRate:[self.audioDecodeConfigDelegate decoderAudioConfigGetSamplingRate] channelCount:[self.audioDecodeConfigDelegate decoderAudioConfigGetNumberOfChannels]];
+    }
+}
+
+#pragma mark -- 启动解码线程
+
 - (void)startVideoDecoderOperation{
     if(!self.formatContext.videoEnable){
         return ;
@@ -240,15 +250,7 @@ static NSTimeInterval maxPacketSleepFullAndPauseTimeInterval = 0.5;
     }
 }
 
-- (void)setupFFAudioDecoder{
-    if (self.formatContext.audioEnable) {
-        self.audioDecoder = [KKFFAudioDecoder decoderWithCodecContext:self.formatContext->audioCodecContext
-                                                             timebase:self.formatContext.audioTimebase
-                                                             sampleRate:[self.audioDecodeConfigDelegate decoderAudioConfigGetSamplingRate] channelCount:[self.audioDecodeConfigDelegate decoderAudioConfigGetNumberOfChannels]];
-    }
-}
-
-#pragma mark -- 读取原始音视频帧并加入到Packet队列
+#pragma mark -- 读取原始音视频帧线程并加入到Packet队列
 
 - (void)setupReadPacketOperation{
     if (self.error) {

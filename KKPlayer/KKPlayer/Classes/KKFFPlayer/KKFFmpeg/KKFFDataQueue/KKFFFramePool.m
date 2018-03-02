@@ -98,8 +98,8 @@
     if (![frame isKindOfClass:self.frameClass]) return;
     [self.lock lock];
     if (self.playingFrame) {
-        [self.unuseFrames addObject:self.playingFrame];
-        [self.usedFrames removeObject:self.playingFrame];
+        [self.unuseFrames removeObject:self.playingFrame];
+        [self.usedFrames addObject:self.playingFrame];
     }
     self.playingFrame = frame;
     [self.lock unlock];

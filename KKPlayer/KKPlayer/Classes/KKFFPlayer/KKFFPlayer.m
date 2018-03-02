@@ -371,7 +371,7 @@
         double percent = [self percentForTime:_playableTime duration:duration];
         if (_playableTime == 0 || _playableTime == duration) {
             [KKPlayerEventCenter raiseEvent:self.playerInterface playablePercent:percent current:_playableTime total:duration];
-        } else {//if (!self.decoder.endOfFile && self.decoder.seekEnable) {
+        } else {
             NSTimeInterval currentTime = [NSDate date].timeIntervalSince1970;
             if (currentTime - self.lastPostPlayableTime >= 1) {
                 self.lastPostPlayableTime = currentTime;
