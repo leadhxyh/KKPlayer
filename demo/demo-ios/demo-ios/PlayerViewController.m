@@ -74,9 +74,6 @@
     
     NSURL * normalVideo = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"The Three Diablos" ofType:@"avi"]];
     [self.player preparePlayerWithURL:normalVideo videoType:KKVideoTypeNormal displayType:KKDisplayTypeNormal];
-    
-//    NSURL * vrVideo = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"google-help-vr" ofType:@"mp4"]];
-//    [self.player preparePlayerWithURL:vrVideo videoType:KKVideoTypeVR displayType:KKDisplayTypeNormal];
 }
 
 - (void)viewDidLayoutSubviews{
