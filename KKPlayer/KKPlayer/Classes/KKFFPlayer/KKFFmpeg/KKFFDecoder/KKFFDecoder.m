@@ -233,7 +233,7 @@ static NSTimeInterval maxPacketSleepFullAndPauseTimeInterval = 0.5;
     }
 }
 
-#pragma mark -- 启动解码线程
+#pragma mark -- 启动视频的解码线程
 
 - (void)startVideoDecoderOperation{
     if(!self.formatContext.videoEnable){
@@ -250,7 +250,7 @@ static NSTimeInterval maxPacketSleepFullAndPauseTimeInterval = 0.5;
     }
 }
 
-#pragma mark -- 读取原始音视频帧线程并加入到Packet队列
+#pragma mark -- 读取原始音视频帧线程
 
 - (void)setupReadPacketOperation{
     if (self.error) {
@@ -379,10 +379,6 @@ static NSTimeInterval maxPacketSleepFullAndPauseTimeInterval = 0.5;
         }
         return;
     }
-    NSTimeInterval tempDuration = 8;
-    if (!self.formatContext.audioEnable) {
-        tempDuration = 15;
-    }
 
     self.progress = time;
     self.seekToTime = time;
@@ -401,7 +397,9 @@ static NSTimeInterval maxPacketSleepFullAndPauseTimeInterval = 0.5;
 
 - (KKFFAudioFrame *)fetchAudioFrame{
     BOOL check = self.stopDecode || self.seeking || self.buffering || self.paused || self.decodeFinished || !self.formatContext.audioEnable;
-    if (check) return nil;
+    if (check){
+        return nil;
+    }
     if (self.audioDecoder.frameQueueEmpty) {
         [self updateBufferedDuration];
         [self updateProgress];
@@ -440,6 +438,7 @@ static NSTimeInterval maxPacketSleepFullAndPauseTimeInterval = 0.5;
     NSTimeInterval updateTime = [NSDate date].timeIntervalSince1970;
     KKFFVideoFrame *videoFrame = nil;
     if (self.formatContext.audioEnable){
+        //优先使用音频的时间来同步音视频的播放
         if (self.videoFrameUpdateTime < 0) {
             videoFrame = [self.videoDecoder getFirstPositionFrame];
         } else {

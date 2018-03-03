@@ -41,7 +41,7 @@
 }
 
 - (void)dealloc{
-    [self flush];
+    [self destory];
     KKPlayerLog(@"KKFFFramePool release");
 }
 
@@ -124,6 +124,13 @@
     }];
     [self.usedFrames removeAllObjects];
     
+    [self.lock unlock];
+}
+
+- (void)destory{
+    [self.lock lock];
+    [self.usedFrames removeAllObjects];
+    [self.unuseFrames removeAllObjects];
     [self.lock unlock];
 }
 

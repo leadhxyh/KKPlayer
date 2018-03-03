@@ -67,7 +67,11 @@ static NSString *const AVMediaSelectionOptionTrackIDKey = @"MediaSelectionOption
 
 #pragma mark -- 准备操作
 
-- (void)prepareVideo:(BOOL)forceRenderWithOpenGL{
+/**
+ prepareVideo
+ @param forceRenderWithOpenGL -- NO ,使用AVPlayer渲染，YES , 使用opengl渲染
+ */
+- (void)prepareVideoForceRenderWithGL:(BOOL)forceRenderWithOpenGL{
     
     [self clear];
     
@@ -150,7 +154,7 @@ static NSString *const AVMediaSelectionOptionTrackIDKey = @"MediaSelectionOption
             break;
         case KKPlayerStateFailed:
             [self clear];
-            [self prepareVideo:self.forceRenderWithOpenGL];
+            [self prepareVideoForceRenderWithGL:self.forceRenderWithOpenGL];
             break;
         case KKPlayerStateNone:
             self.state = KKPlayerStateBuffering;

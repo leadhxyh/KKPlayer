@@ -202,6 +202,12 @@
     return self;
 }
 
+- (void)setPixelBuffer:(CVPixelBufferRef)pixelBuffer{
+    if(pixelBuffer){
+        self->_pixelBuffer = pixelBuffer;
+    }
+}
+
 - (KKFFFrameType)type{
     return KKFFFrameTypeCVYUVVideo;
 }

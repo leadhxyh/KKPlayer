@@ -117,9 +117,9 @@ static int ffmpegInterruptCallback(void *ctx){
     
     if (videoError && audioError){
         if (videoError.code == KKFFDecoderErrorCodeStreamNotFound && audioError.code != KKFFDecoderErrorCodeStreamNotFound){
-            self.error = audioError;
-        }else{
             self.error = videoError;
+        }else{
+            self.error = audioError;
         }
     }
 }

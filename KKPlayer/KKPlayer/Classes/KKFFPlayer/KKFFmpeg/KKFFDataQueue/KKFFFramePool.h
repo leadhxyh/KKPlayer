@@ -18,4 +18,5 @@
 - (NSUInteger)usedCount;
 - (__kindof KKFFFrame *)getUnuseFrame;
 - (void)flush;
+- (void)destory;
 @end

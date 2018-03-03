@@ -23,7 +23,7 @@ static AVPacket flushPacket;
 @property(nonatomic,assign)BOOL canceled;
 @property(nonatomic,strong)KKFFPacketQueue *packetQueue;//原始数据队列
 @property(nonatomic,strong)KKFFFrameQueue *frameQueue;//已解码队列
-@property(nonatomic,strong)KKFFFramePool *framePool;
+@property(nonatomic,strong)KKFFFramePool *framePool;//重用池，避免重复创建帧浪费性能资源，程序从重用池中获取帧并初始化并加入到frameQueue红
 @property(nonatomic,strong)KKFFVideoToolBox *videoToolBox;
 @end
 
@@ -76,6 +76,7 @@ static AVPacket flushPacket;
         av_free(_tempFrame);
         _tempFrame = NULL;
     }
+    [self destroy];
     KKPlayerLog(@"KKFFVideoDecoder release");
 }
 
@@ -86,6 +87,7 @@ static AVPacket flushPacket;
     self.videoToolBoxMaxDecodeFrameCount = 20;
     self.codecContextMaxDecodeFrameCount = 3;
     if (self.videoToolBoxAsync && _codecContext->codec_id == AV_CODEC_ID_H264) {
+        //h264,使用videotoolbox硬件加速
         self.videoToolBox = [KKFFVideoToolBox videoToolBoxWithCodecContext:self->_codecContext];
         if ([self.videoToolBox trySetupVTSession]) {
             self->_videoToolBoxDidOpen = YES;
@@ -96,6 +98,7 @@ static AVPacket flushPacket;
     }
     self.packetQueue = [KKFFPacketQueue packetQueueWithTimebase:self.timebase];
     if (self.videoToolBoxDidOpen) {
+        self.framePool = [KKFFFramePool poolWithCapacity:10 frameClass:[KKFFCVYUVVideoFrame class]];
         self.frameQueue = [KKFFFrameQueue frameQueue];
         self.frameQueue.minFrameCountThreshold = 4;
         self->_decodeAsync = YES;
@@ -275,7 +278,9 @@ static AVPacket flushPacket;
 }
 
 - (KKFFAVYUVVideoFrame *)videoFrameFromTempFrame:(int)packetSize{
-    if (!_tempFrame->data[0] || !_tempFrame->data[1] || !_tempFrame->data[2]) return nil;
+    if (!_tempFrame->data[0] || !_tempFrame->data[1] || !_tempFrame->data[2]){
+        return nil;
+    }
     
     KKFFAVYUVVideoFrame *videoFrame = [self.framePool getUnuseFrame];
     [videoFrame setFrameData:_tempFrame width:_codecContext->width height:_codecContext->height];
@@ -314,7 +319,7 @@ static AVPacket flushPacket;
             continue;
         }
         if (self.frameQueue.count >= self.videoToolBoxMaxDecodeFrameCount) {
-            KKPlayerLog(@"decode video thread sleep");
+            //KKPlayerLog(@"decode video thread sleep");
             [NSThread sleepForTimeInterval:0.03];
             continue;
         }
@@ -354,9 +359,14 @@ static AVPacket flushPacket;
 
 - (KKFFVideoFrame *)videoFrameFromVideoToolBox:(AVPacket)packet{
     CVImageBufferRef imageBuffer = [self.videoToolBox imageBuffer];
-    if (imageBuffer == NULL) return nil;
+    if (imageBuffer == NULL){
+        return nil;
+    }
     
-    KKFFCVYUVVideoFrame *videoFrame = [[KKFFCVYUVVideoFrame alloc] initWithAVPixelBuffer:imageBuffer];
+    KKFFCVYUVVideoFrame *videoFrame = [[KKFFCVYUVVideoFrame alloc]initWithAVPixelBuffer:imageBuffer];
+    //内存泄漏，待解决
+    //KKFFCVYUVVideoFrame *videoFrame = (KKFFCVYUVVideoFrame *)[self.framePool getUnuseFrame];
+    //[videoFrame setPixelBuffer:imageBuffer];
     if (packet.pts != AV_NOPTS_VALUE) {
         videoFrame.position = packet.pts * self.timebase;
     } else {
@@ -400,7 +410,7 @@ static AVPacket flushPacket;
     self.canceled = YES;
     [self.frameQueue destroy];
     [self.packetQueue destroy];
-    [self.framePool flush];
+    [self.framePool destory];
 }
 
 #pragma mark -- @property getter && setter

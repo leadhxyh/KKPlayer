@@ -270,7 +270,7 @@
     return self.audioManager.numberOfChannels;
 }
 
-#pragma mark -- KKAudioManagerDelegate
+#pragma mark -- KKAudioManagerDelegate,获取解码的音频数据，并使用AudioUnit播放
 
 - (void)audioManager:(KKAudioManager *)audioManager outputData:(float *)outputData numberOfFrames:(UInt32)numberOfFrames numberOfChannels:(UInt32)numberOfChannels{
     if (!self.playing) {

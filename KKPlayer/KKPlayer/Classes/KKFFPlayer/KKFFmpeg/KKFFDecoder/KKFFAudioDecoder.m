@@ -21,8 +21,8 @@
     SwrContext *_audioSwrContext;
     void *_audioSwrBuffer;
 }
-@property(nonatomic,strong)KKFFFrameQueue *frameQueue;
-@property(nonatomic,strong)KKFFFramePool *framePool;
+@property(nonatomic,strong)KKFFFrameQueue *frameQueue;//已解码帧队列
+@property(nonatomic,strong)KKFFFramePool *framePool;//重用池，避免重复创建帧浪费性能资源，程序从重用池中获取帧并初始化并加入到frameQueue红
 @property(nonatomic,assign)NSTimeInterval timebase;
 @property(nonatomic,assign)Float64 samplingRate;
 @property(nonatomic,assign)UInt32 channelCount;
@@ -73,7 +73,7 @@
     _audioSwrContext = swr_alloc_set_opts(NULL, av_get_default_channel_layout(_channelCount), AV_SAMPLE_FMT_S16, _samplingRate, av_get_default_channel_layout(_codecContext->channels), _codecContext->sample_fmt, _codecContext->sample_rate, 0, NULL);
     
     int result = swr_init(_audioSwrContext);
-    NSError * error = KKFFCheckError(result);
+    NSError *error = KKFFCheckError(result);
     if (error || !_audioSwrContext) {
         if (_audioSwrContext) {
             swr_free(&_audioSwrContext);

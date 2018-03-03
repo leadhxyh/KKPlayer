@@ -45,5 +45,6 @@ typedef NS_ENUM(NSUInteger, KKFFVideoFrameRotateType) {
 @interface KKFFCVYUVVideoFrame:KKFFVideoFrame
 @property(nonatomic,assign,readonly)CVPixelBufferRef pixelBuffer;
 - (instancetype)initWithAVPixelBuffer:(CVPixelBufferRef)pixelBuffer;
+- (void)setPixelBuffer:(CVPixelBufferRef)pixelBuffer;
 @end
 

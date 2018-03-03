@@ -96,7 +96,7 @@
     switch (self.decoderType){
         case KKDecoderTypeAVPlayer:{
             [self.ffPlayer stop];
-            [self.avPlayer prepareVideo:NO];
+            [self.avPlayer prepareVideoForceRenderWithGL:NO];
         }
             break;
         case KKDecoderTypeFFmpeg:{
