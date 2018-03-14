@@ -12,6 +12,7 @@
 #import "KKFFFramePool.h"
 #import "KKTools.h"
 #import "KKFFVideoToolBox.h"
+#import "KKWaterMarkTool.h"
 
 //当解码遇到这AVPacket时，需要清理AVCodecContext的缓冲
 static AVPacket flushPacket;
@@ -25,6 +26,7 @@ static AVPacket flushPacket;
 @property(nonatomic,strong)KKFFFrameQueue *frameQueue;//已解码队列
 @property(nonatomic,strong)KKFFFramePool *framePool;//重用池，避免重复创建帧浪费性能资源，程序从重用池中获取帧并初始化并加入到frameQueue红
 @property(nonatomic,strong)KKFFVideoToolBox *videoToolBox;
+@property(nonatomic,strong)KKWaterMarkTool *waterMarkTool;
 @end
 
 @implementation KKFFVideoDecoder
@@ -66,6 +68,7 @@ static AVPacket flushPacket;
         self->_ffmpegDecodeAsync = ffmpegDecodeAsync;
         self->_videoToolBoxAsync = videoToolBoxAsync;
         self->_rotateType = rotateType;
+        [self.waterMarkTool setupFilters:@"drawtext=Helvetica:fontcolor=green:fontsize=30:text='KKFinger'" videoCodecCtx:codecContext];
         [self setupFrameQueue];
     }
     return self;
@@ -282,6 +285,15 @@ static AVPacket flushPacket;
         return nil;
     }
     
+//    if (av_buffersrc_add_frame(self.waterMarkTool->buffersrcCtx, _tempFrame) < 0) {
+//        NSLog(@"Error while feeding the filtergraph\n");
+//    }
+//
+//    int ret = av_buffersink_get_frame(self.waterMarkTool->buffersinkCtx, _tempFrame);
+//    if (ret < 0){
+//        NSLog(@"Error while feeding the filtergraph\n");
+//    }
+    
     KKFFAVYUVVideoFrame *videoFrame = [self.framePool getUnuseFrame];
     [videoFrame setFrameData:_tempFrame width:_codecContext->width height:_codecContext->height];
     videoFrame.position = av_frame_get_best_effort_timestamp(_tempFrame) * self.timebase;
@@ -414,6 +426,13 @@ static AVPacket flushPacket;
 }
 
 #pragma mark -- @property getter && setter
+
+- (KKWaterMarkTool *)waterMarkTool{
+    if(!_waterMarkTool){
+        _waterMarkTool = [KKWaterMarkTool new];
+    }
+    return _waterMarkTool;
+}
 
 - (NSInteger)packetSize{
     if (self.videoToolBoxDidOpen || self.ffmpegDecodeAsync) {

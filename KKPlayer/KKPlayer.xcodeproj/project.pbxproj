@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E48FB6820590E7D004AD376 /* KKWaterMarkTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 0E48FB6620590E7D004AD376 /* KKWaterMarkTool.h */; };
+		0E48FB6920590E7D004AD376 /* KKWaterMarkTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 0E48FB6720590E7D004AD376 /* KKWaterMarkTool.m */; };
 		140CFE722015C07D004B9FC7 /* VideoDecodeAcceleration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 140CFE6F2015C077004B9FC7 /* VideoDecodeAcceleration.framework */; };
 		1457502B202D6C2300EF4CEB /* KKPlayerInterface.h in Headers */ = {isa = PBXBuildFile; fileRef = 14574D74202D6C2200EF4CEB /* KKPlayerInterface.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1457502E202D6C2300EF4CEB /* KKPlayerInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = 14574D75202D6C2200EF4CEB /* KKPlayerInterface.m */; };
@@ -214,6 +216,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0E48FB6620590E7D004AD376 /* KKWaterMarkTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KKWaterMarkTool.h; sourceTree = "<group>"; };
+		0E48FB6720590E7D004AD376 /* KKWaterMarkTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KKWaterMarkTool.m; sourceTree = "<group>"; };
 		140CFE6F2015C077004B9FC7 /* VideoDecodeAcceleration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoDecodeAcceleration.framework; path = System/Library/Frameworks/VideoDecodeAcceleration.framework; sourceTree = SDKROOT; };
 		14574D74202D6C2200EF4CEB /* KKPlayerInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KKPlayerInterface.h; sourceTree = "<group>"; };
 		14574D75202D6C2200EF4CEB /* KKPlayerInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KKPlayerInterface.m; sourceTree = "<group>"; };
@@ -867,6 +871,8 @@
 			children = (
 				1457544F202D8DBA00EF4CEB /* KKTools.h */,
 				14575450202D8DBA00EF4CEB /* KKTools.m */,
+				0E48FB6620590E7D004AD376 /* KKWaterMarkTool.h */,
+				0E48FB6720590E7D004AD376 /* KKWaterMarkTool.m */,
 			);
 			path = KKTools;
 			sourceTree = "<group>";
@@ -1070,6 +1076,7 @@
 				14575542202D8DBA00EF4CEB /* mastering_display_metadata.h in Headers */,
 				14575572202D8DBA00EF4CEB /* samplefmt.h in Headers */,
 				14575512202D8DBA00EF4CEB /* frame.h in Headers */,
+				0E48FB6820590E7D004AD376 /* KKWaterMarkTool.h in Headers */,
 				145755ED202D8DBA00EF4CEB /* KKFFFramePool.h in Headers */,
 				14575671202D8DBB00EF4CEB /* KKGLProgramVrBox.h in Headers */,
 				145754CA202D8DBA00EF4CEB /* avassert.h in Headers */,
@@ -1188,6 +1195,7 @@
 				145755F6202D8DBA00EF4CEB /* KKFFFrameQueue.m in Sources */,
 				14575656202D8DBB00EF4CEB /* KKGLCoordBufferVRBox.m in Sources */,
 				14575692202D8DBB00EF4CEB /* KKGLTextureYUV420.m in Sources */,
+				0E48FB6920590E7D004AD376 /* KKWaterMarkTool.m in Sources */,
 				1457560E202D8DBA00EF4CEB /* KKFFFormatContext.m in Sources */,
 				145756BC202D8DBB00EF4CEB /* KKMotion.m in Sources */,
 				1457568C202D8DBB00EF4CEB /* KKGLTextureVRBox.m in Sources */,
