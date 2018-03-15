@@ -14,3 +14,13 @@ demo/demo-ios/demo-ios.xcodeproj/xcuserdata/KKFinger.xcuserdatad/xcschemes/xcsch
 demo/demo.xcworkspace/xcuserdata/KKFinger.xcuserdatad/UserInterfaceState.xcuserstate
 demo/demo.xcworkspace/xcuserdata/KKFinger.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
 KKPlayer/KKPlayer.xcodeproj/xcuserdata/KKFinger.xcuserdatad/xcschemes/xcschememanagement.plist
+
+KKPlayer/KKPlayer/Classes/KKAudioManager.zip
+
+KKPlayer/KKPlayer/Classes/KKAVPlayer.zip
+
+KKPlayer/KKPlayer/Classes/KKFFPlayer/KKFFmpeg.zip
+
+KKPlayer/KKPlayer/Classes/KKGLDrawTool.zip
+
+KKPlayer/KKPlayer/Classes/KKVideoToolBox.zip
